@@ -40,7 +40,7 @@ export const login = async (req,res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email })
         if (!user) {
-            res.status(400).json({ message: "Create the account. User doesnot exist" })
+            return res.status(400).json({ message: "Create the account. User doesnot exist" })
         }
         // compare the passwords
         const isMatch = await bcrypt.compare(password, user.password);

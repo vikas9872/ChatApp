@@ -23,8 +23,6 @@ function Signup() {
       const res = await axios.post(`${SERVER_URL}/api/auth/signup`, formData, {
         withCredentials: true,
       });
-
-      console.log("Signup success:", res.data);
       alert("Signup successful!");
     } catch (error) {
       console.error("Signup error:", error.response?.data || error.message);
