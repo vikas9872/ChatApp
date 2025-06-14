@@ -2,8 +2,13 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { SERVER_URL } from '../main';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../Redux/userSlice';
 
 function Login() {
+  const dispatch=useDispatch()
+  const {userData}=useSelector(state=>state.user)
+  console.log(userData)
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -20,9 +25,8 @@ function Login() {
       const res = await axios.post(
         `${SERVER_URL}/api/auth/login`,formData,{ withCredentials: true }
       );
-
+      dispatch(setUserData(res.data));
       alert("Login successful!");
-      console.log(res.data);
     } catch (error) {
       console.error("Login error:", error.response?.data || error.message);
       alert(error.response?.data?.message || "Login failed");

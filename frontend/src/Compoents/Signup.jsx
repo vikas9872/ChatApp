@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {SERVER_URL} from '../main'
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../Redux/userSlice';
 
 function Signup() {
+  const dispatch=useDispatch()
+  const { userData } = useSelector((state) => state.user);
+  console.log(userData)
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -23,6 +28,8 @@ function Signup() {
       const res = await axios.post(`${SERVER_URL}/api/auth/signup`, formData, {
         withCredentials: true,
       });
+      // update data using dispatch
+      dispatch(setUserData(res.data))
       alert("Signup successful!");
     } catch (error) {
       console.error("Signup error:", error.response?.data || error.message);
